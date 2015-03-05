@@ -1,7 +1,9 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "speed": 0
+    },
     "capabilities": [
-        ""
+        "location"
     ],
     "companyName": "minjamiketa@gmail.com",
     "longName": "speedometer",
