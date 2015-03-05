@@ -8,11 +8,11 @@ function fetch_speed(position) {
     
      speedMPH = speed * 0.000621371192;
     speedKPH = speed * 0.001;
-
+  
+ console.log ( speedMPH + ' ' );
   };
 
  
-        }
       } else {
         console.log('Error');
       }
@@ -24,7 +24,7 @@ function fetch_speed(position) {
  
 function fetch_speed_error(err) {
   console.log(err);
-  Pebble.sendAppMessage({location: 'Unable to retrieve speed'});
+  Pebble.sendAppMessage({speed_key: 999});
 }
  
 Pebble.addEventListener('ready', function(e) {

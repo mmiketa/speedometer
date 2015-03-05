@@ -5,6 +5,10 @@ static TextLayer *cSpeed_layer;
 char cSpeed[4];
 int speed = 45;
 
+enum {
+  speed_key = 0
+};
+
 void process_tuple(Tuple *t)
 {
   //Get key
@@ -16,7 +20,7 @@ void process_tuple(Tuple *t)
  
   //Decide what to do
   switch(key) {
-    case speed:
+    //case speed_key:
       //speed received
       snprintf(cSpeed, sizeof(cSpeed), "%d", value);
       text_layer_set_text(cSpeed_layer, (char*) &cSpeed);
