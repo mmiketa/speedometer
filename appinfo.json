@@ -1,0 +1,20 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "minjamiketa@gmail.com",
+    "longName": "speedometer",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "2",
+    "shortName": "speedometer",
+    "uuid": "1ad3657a-97cf-4b59-a5b0-d038b95ac644",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
