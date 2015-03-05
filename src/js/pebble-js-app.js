@@ -1,26 +1,22 @@
-  var speed; 
-  var speedMPH;
-  var speedKPH;
-  var locationOptions = {timeout: 15000, maximumAge: 60000}; 
+ Pebble.addEventListener("ready",
+  function(e) {
+    //App is ready to receive JS messages
+  }
+);
+
+var speed; 
+var speedMPH;
+var speedKPH;
+var locationOptions = {timeout: 15000, maximumAge: 60000};
 
 function fetch_speed(position) {
      speed  = position.coords.speed;
     
      speedMPH = speed * 0.000621371192;
     speedKPH = speed * 0.001;
-  
+  Pebble.sendAppMessage({speed_key: speedMPH});
  console.log ( speedMPH + ' ' );
   };
-
- 
-      } else {
-        console.log('Error');
-      }
-    }
-  }
- 
-  req.send(null);
-}
  
 function fetch_speed_error(err) {
   console.log(err);
