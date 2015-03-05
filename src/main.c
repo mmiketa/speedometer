@@ -1,22 +1,75 @@
 #include <pebble.h>
 
-Window *my_window;
-TextLayer *text_layer;
-
-void handle_init(void) {
-  my_window = window_create();
-
-  text_layer = text_layer_create(GRect(0, 0, 144, 20));
-  window_stack_push(my_window, true);
+static Window *s_main_window;
+static TextLayer *cSpeed_layer;
+char cSpeed[4];
+int speed = 45;
+/*
+static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
+  speed = speed+5;
+  snprintf(cSpeed, sizeof(cSpeed), "%d", speed);
+  text_layer_set_text(cSpeed_layer, cSpeed);
+}
+*/
+static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
+  text_layer_set_text(cSpeed_layer, cSpeed);
+}
+/*
+static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
+  speed = speed-5;
+  snprintf(cSpeed, sizeof(cSpeed), "%d", speed);
+  text_layer_set_text(cSpeed_layer, cSpeed);
+}
+*/
+static void click_config_provider(void *context) {
+  // Register the ClickHandlers
+//  window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
+  window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
+//  window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
 }
 
-void handle_deinit(void) {
-  text_layer_destroy(text_layer);
-  window_destroy(my_window);
+static void main_window_load(Window *window) {
+  Layer *window_layer = window_get_root_layer(window);
+  GRect window_bounds = layer_get_bounds(window_layer);
+
+  // Create output TextLayer
+  cSpeed_layer = text_layer_create(GRect(0, 0, window_bounds.size.w, window_bounds.size.h));
+  text_layer_set_background_color(cSpeed_layer, GColorBlack);
+  text_layer_set_text_color(cSpeed_layer, GColorClear);
+  snprintf(cSpeed, sizeof(cSpeed), "%d", speed);
+  text_layer_set_text(cSpeed_layer, cSpeed);
+  text_layer_set_font(cSpeed_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
+  text_layer_set_text_alignment(cSpeed_layer, GTextAlignmentCenter);
+  layer_add_child(window_layer, text_layer_get_layer(cSpeed_layer));
+  
+
+}
+
+
+
+static void main_window_unload(Window *window) {
+  // Destroy output TextLayer
+  text_layer_destroy(cSpeed_layer);
+}
+
+static void init() {
+  // Create main Window
+  s_main_window = window_create();
+  window_set_window_handlers(s_main_window, (WindowHandlers) {
+    .load = main_window_load,
+    .unload = main_window_unload
+  });
+    window_set_click_config_provider(s_main_window, click_config_provider);
+    window_stack_push(s_main_window, true);
+}
+
+static void deinit() {
+  // Destroy main Window
+  window_destroy(s_main_window);
 }
 
 int main(void) {
-  handle_init();
+  init();
   app_event_loop();
-  handle_deinit();
+  deinit();
 }
