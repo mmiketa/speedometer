@@ -11,7 +11,7 @@ function fetch_speed(position) {
 
   };
 
- Pebble.sendAppMessage({speed: speedMPH});
+ 
         }
       } else {
         console.log('Error');
